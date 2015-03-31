@@ -1,8 +1,25 @@
+
 <!DOCTYPE html>
 <html>
 <head>
 </head>
 
+<body>
+<div>
+    {{ user }}
+    {% if user.is_anonymous %}
+    <a href="{% url 'django.contrib.auth.views.login' %}">login</a>
+    {% else %}
+    <a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
+    {% endif %}
+ </div>
+
+<h1> Patient Homepage </h1> 
+</body>
+
+	</script>
+	
+</html>
 <body>
 <select id="showRss">
 	<option name="feed1">Feed1</option>

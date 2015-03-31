@@ -152,20 +152,10 @@ class NurseCreationForm(ModelForm):
     def save(self, commit=True):
         # Save the provided password in hashed format
         Nurse = super(NurseCreationForm, self).save(commit=False)
+        Nurse.email = self.cleaned_data['email']
         Nurse.set_password(self.cleaned_data["password1"])
         if commit:
             Nurse.save()
-               # Send email with activation key
-            email_subject = 'Account confirmation'
-            email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-            48hours http://127.0.0.1:8000/accounts/confirm/%s" % (username, activation_key)
-
-            send_mail(email_subject, email_body, 'ristonjbergen@gmail.com',
-                [email], fail_silently=False)
-
-            return HttpResponseRedirect('/accounts/register_success')
-        else:
-            args['form'] = RegistrationForm()
         return Nurse
 
 
