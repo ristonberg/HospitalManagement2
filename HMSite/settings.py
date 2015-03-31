@@ -23,6 +23,13 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'Ristonjbergen@gmail.com'
+EMAIL_HOST_PASSWORD = 'rjkool01'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Ristonjbergen@gmail.com'
+
 LOGIN_REDIRECT_URL = '/HMS/nurse_home'
 
 ALLOWED_HOSTS = []

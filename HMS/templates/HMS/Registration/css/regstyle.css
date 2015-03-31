@@ -16,6 +16,7 @@ li {padding:10px 0px;border-top:1px dotted #c7c7c7;min-height:27px;}
 label {
 	float:left;
 	width:180px;
+	text-transform: lowercase;
 }
 
 input, 
@@ -36,6 +37,7 @@ textarea {
 	border:1px solid #c7c7c7;
 	outline:5px solid rgba(0, 0, 0, 0.1);
 	padding:3px 5px;
+	text-transform: lowercase;
 }
 
 input[type=text]:focus, 
@@ -47,6 +49,7 @@ input[type=email]:focus,
 textarea:active, 
 textarea:focus {
 	outline:5px solid rgba(0, 0, 0, 0.2);
+	text-transform: lowercase;
 }
 
 textarea {

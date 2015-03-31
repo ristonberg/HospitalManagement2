@@ -2,7 +2,9 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+import hashlib, datetime, random
 from datetime import date
+from django import forms
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -35,11 +37,15 @@ class MyUserManager(BaseUserManager):
 
 
 class MyUser(AbstractBaseUser):
+  
     email = models.EmailField(
-        verbose_name='email address',
+        verbose_name='e-mail',
         max_length=255,
         unique=True,
-    )
+        )
+
+    activation_key = models.CharField(max_length=40, blank=True)
+    key_expires = models.DateTimeField(default=datetime.date.today())
     first_name = models.CharField(max_length = 20, default = "")
     last_name = models.CharField(max_length = 20, default = "")
     birth_date = models.DateField(default = date.today)
@@ -59,8 +65,7 @@ class MyUser(AbstractBaseUser):
     relation = models.CharField(max_length = 20, default = "")
     primary_Phone = models.IntegerField(default = 0)
     secondary_Phone = models.IntegerField(default = 0)
- 
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_content_manager = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     #user_Type = models.CharField(max_length = 10, default = "")
