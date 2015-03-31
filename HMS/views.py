@@ -59,8 +59,10 @@ def add_Nurse(request):
             activation_key = hashlib.sha1(salted).hexdigest()
             key_expires = datetime.datetime.today() + datetime.timedelta(2)
             email_subject = 'Account confirmation'
+            #email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
+            #48hours http://127.0.0.1:8000/accounts/confirm/%s" % (email, activation_key)
             email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-            48hours http://127.0.0.1:8000/accounts/confirm/%s" % (email, activation_key)
+            48hours http://127.0.0.1:8000/HMS/Login/login.html" % (email, activation_key)
 
             send_mail(email_subject, email_body, 'ristonjbergen@gmail.com',
                 [email], fail_silently=False)
@@ -103,8 +105,10 @@ def add_Doctor(request):
             key_expires = datetime.datetime.today() + datetime.timedelta(2)
             
             email_subject = 'Account confirmation'
+            #email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
+            #48hours http://127.0.0.1:8000/accounts/confirm/%s" % (email, activation_key)
             email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-            48hours http://127.0.0.1:8000/accounts/confirm/%s" % (email, activation_key)
+            48hours http://127.0.0.1:8000/HMS/Login/login.html" % (email, activation_key)
 
             send_mail(email_subject, email_body, 'ristonjbergen@gmail.com',
                 [email], fail_silently=False)
@@ -148,7 +152,7 @@ def add_Patient(request):
             #email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
             #48hours http://127.0.0.1:8000/accounts/confirm/%s" % (email, activation_key)
             email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-            48hours http://127.0.0.1:8000/accounts/confirm/%s" % (email, activation_key)
+            48hours http://127.0.0.1:8000/HMS/Login/login.html" % (email, activation_key)
 
             send_mail(email_subject, email_body, 'ristonjbergen@gmail.com',
                 [email], fail_silently=False)
@@ -168,8 +172,8 @@ def add_Patient(request):
 def register_confirm(request, activation_key):
     #check if user is already logged in and if he is redirect him to some other url, e.g. home
     if request.MyUser.is_authenticated():
+        #HttpResponseRedirect('HMS/doctor_homepage')
         HttpResponseRedirect('HMS/doctor_homepage')
-
     # check if there is UserProfile which matches the activation key (if not then display 404)
     user_profile = get_object_or_404(MyUser, activation_key=activation_key)
 
