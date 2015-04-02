@@ -5,7 +5,7 @@ from django.contrib.auth.models import (
 import hashlib, datetime, random
 from datetime import date
 from django import forms
-
+#test for git
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
