@@ -4,42 +4,18 @@
 </head>
 
 <body>
-<select id="showRss">
-	<option name="feed1">Feed1</option>
-	<option name="feed2">Feed2</option>
-</select>
+<div>
+    {{ user }}
+    {% if user.is_anonymous %}
+    <a href="{% url 'django.contrib.auth.views.login' %}">login</a>
+    {% else %}
+    <a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
+    {% endif %}
+ </div>
 
-<div id="rssContainer">
-	<ul id="feed1">
-		<li>feed item 1</li>
-		<li>feed item 2</li>
-	</ul>
-	<ul id="feed2">
-		<li>feed item 3</li>
-		<li>feed item 4</li>
-	</ul>
-</div>
+<h1> Patient Homepage </h1> 
 </body>
 
-<script>
-		var rss = document.getElementById('rssContainer');
-		var nodes = document.getElementsByTagName('ul');
-		var select = document.getElementById('showRss');
-
-		function hideAll(){
-			for(i=0; i<nodes.length;++i){
-				nodes[i].style.display='none';
-			}
-		}
-
-		select.onchange = function(){
-			hideAll();
-			var e = this[this.selectedIndex].getAttribute('name');
-			var show = document.getElementById(e);
-			show.style.display = 'block';
-		}
-
-		hideAll();
 	</script>
 	
 </html>
