@@ -28,7 +28,6 @@ class PatientCreationForm(ModelForm):
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
-            #user.setUserType
         return user
 
 
@@ -74,7 +73,6 @@ class DoctorCreationForm(ModelForm):
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
-            #user.setUserType
         return user
 
 
@@ -104,7 +102,7 @@ class NurseCreationForm(ModelForm):
 
     class Meta:
         model = Nurse
-        fields = ('email', 'first_name', 'last_name', 'department')
+        fields = ('email', 'first_name', 'last_name', 'department','house_number','street','city','state','zip_code')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -120,7 +118,6 @@ class NurseCreationForm(ModelForm):
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
-        #user.setUserType
         return user
 
 class NurseChangeForm(ModelForm):

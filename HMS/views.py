@@ -12,20 +12,27 @@ from django.core.context_processors import csrf
 from django.core.mail import send_mail
 import hashlib, datetime, random
 from django.utils import timezone
+from django.views import generic
 
 def login(request):
     return render(request, 'registration/login.html')
+
+def home(request):
+    return render(request, 'HMS/home.html')
 
 def registration(request):
     return render(request, 'HMS/Registration/registration.html')
 
 def patient_home(request):
-    #print(request.user.get_Type)
-    return render(request, 'HMS/PatientHome/patient_home.html')
+    doctor_list = Doctor.objects.order_by('-last_name')[:25]
+    context = {'doctor_list': doctor_list}
+    return render(request, 'HMS/PatientHome/patient_home.html', context)
 
 def doctor_home(request):
-    #print(request.user.get_Type)
-    return HttpResponse("Doctor Homepage")
+    patient_list = Patient.objects.order_by('-last_name')[:25]
+    context = {'patient_list': patient_list}
+    return render(request, 'HMS/DoctorHome/doctor_home.html', context)
+
 
 def nurse_home(request):
     #print(request.user.get_Type)

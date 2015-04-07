@@ -21,7 +21,7 @@ class MyUserAdmin(UserAdmin):
     fieldsets = (
         ('Basic Info', {'fields': ('email', 'password', 'first_name', 'last_name', 'birth_date',
                                    'phone_number', 'gender', 'marital_Status')}),
-        ('Address', {'fields': ('house_number', 'street', 'city', 'state', 'zip_Code')}),
+        ('Address', {'fields': ('house_number', 'street', 'city', 'state', 'zip_code')}),
         ('Emergency Contact', {'fields': ('name', 'relation', 'primary_Phone', 'secondary_Phone')}),
         ('Permissions', {'fields': ('is_admin', 'is_content_manager')}),
     )
@@ -50,7 +50,7 @@ class NurseAdmin(UserAdmin):
     fieldsets = (
         ('Basic Info', {'fields': ('email', 'password', 'first_name', 'last_name', 'birth_date',
                                    'phone_number', 'gender', 'marital_Status')}),
-        ('Address', {'fields': ('house_number', 'street', 'city', 'state', 'zip_Code')}),
+        ('Address', {'fields': ('house_number', 'street', 'city', 'state', 'zip_code')}),
         ('Emergency Contact', {'fields': ('name', 'relation', 'primary_Phone', 'secondary_Phone')}),
         #('Nurse Details', {'fields':('department')}),
         ('Permissions', {'fields': ('is_admin', 'is_content_manager')}),
@@ -80,7 +80,7 @@ class DoctorAdmin(UserAdmin):
     fieldsets = (
         ('Basic Info', {'fields': ('email', 'password', 'first_name', 'last_name', 'birth_date',
                                    'phone_number', 'gender', 'marital_Status')}),
-        ('Address', {'fields': ('house_number', 'street', 'city', 'state', 'zip_Code')}),
+        ('Address', {'fields': ('house_number', 'street', 'city', 'state', 'zip_code')}),
         ('Emergency Contact', {'fields': ('name', 'relation', 'primary_Phone', 'secondary_Phone')}),
         ('Doctor Details', {'fields': ('degree', 'specialty', 'experience')}),
         ('Permissions', {'fields': ('is_admin', 'is_content_manager')}),
@@ -110,7 +110,7 @@ class PatientAdmin(UserAdmin):
     fieldsets = (
         ('Basic Info', {'fields': ('email', 'password', 'first_name', 'last_name', 'birth_date',
                                    'phone_number', 'gender', 'marital_Status')}),
-        ('Address', {'fields': ('house_number', 'street', 'city', 'state', 'zip_Code')}),
+        ('Address', {'fields': ('house_number', 'street', 'city', 'state', 'zip_code')}),
         ('Emergency Contact', {'fields': ('name', 'relation', 'primary_Phone', 'secondary_Phone')}),
         ('Patient Details', {'fields': ('medical_History', 'insurance_Provider', 'insurance_Policy_Number')}),
         ('Permissions', {'fields': ('is_admin', 'is_content_manager')}),

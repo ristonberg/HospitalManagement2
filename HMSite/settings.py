@@ -23,7 +23,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-LOGIN_REDIRECT_URL = '/HMS/nurse_home'
+LOGIN_REDIRECT_URL = '/HMS/home'
 
 ALLOWED_HOSTS = []
 

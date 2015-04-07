@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'addNurse', views.add_Nurse, name='add_Nurse'),
     url(r'addDoctor', views.add_Doctor, name='add_Doctor'),
     url(r'addPatient', views.add_Patient, name='add_Patient'),
+    url(r'home', views.home, name = 'home'), 
 )
 
 urlpatterns += staticfiles_urlpatterns()
