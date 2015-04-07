@@ -1,0 +1,13 @@
+<html>
+<body>
+<div>  
+    {% if user.is_anonymous %}
+		<a href="{% url 'django.contrib.auth.views.login' %}">login</a>
+    {% else %}   
+		<h1> Welcome, Nurse {{user.first_name}} {{user.last_name}} </h1> 
+		<h2>Patients in your department: </h2>
+		<a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
+    {% endif %}
+ </div>
+</body>
+</html>

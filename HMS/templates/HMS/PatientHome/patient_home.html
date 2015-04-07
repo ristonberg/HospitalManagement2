@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div>  
+    {% if user.is_anonymous %}
+		<a href="{% url 'django.contrib.auth.views.login' %}">login</a>
+    {% else %}   
+		<h1> Welcome, {{user.first_name}} {{user.last_name}} </h1> 
+		<h2>Doctor List </h2>
+		{% if doctor_list %}
+			<ul>
+			{% for doctor in doctor_list %}
+				<li><a href="/polls/{{ question.id }}/">{{doctor.last_name}},{{ doctor.first_name }}</a></li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			<p>No doctors available.</p>
+		{% endif %}
+		<a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
+    {% endif %}
+ </div>
+</body>
+</html>
