@@ -79,14 +79,20 @@ def add_Nurse(request):
         if form.is_valid():
             form.save()
             email = form.cleaned_data['email']
+            user_profile = get_object_or_404(Nurse, email=email)
+            user = user_profile
             random_string = str(random.random()).encode('utf8')
             salt = hashlib.sha1(random_string).hexdigest()[:5]
             salted = (salt + email).encode('utf8')
             activation_key = hashlib.sha1(salted).hexdigest()
             key_expires = datetime.datetime.today() + datetime.timedelta(2)
+            user.activation_key=activation_key
+            user.key_expires=key_expires
+            user.save()
+            
             email_subject = 'Account confirmation'
             email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-            48hours http://127.0.0.1:8000/HMS/account/confirm/%s" % (email, activation_key)
+            48hours http://127.0.0.1:8000/HMS/account/confirm/nurse/%s" % (email, activation_key)
 
             send_mail(email_subject, email_body, 'ristonjbergen@gmail.com',
                 [email], fail_silently=False)
@@ -135,7 +141,7 @@ def add_Doctor(request):
             
             email_subject = 'Account confirmation'
             email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-            48hours http://127.0.0.1:8000/HMS/account/confirm/%s" % (email, activation_key)
+            48hours http://127.0.0.1:8000/HMS/account/confirm/doctor/%s" % (email, activation_key)
 
             send_mail(email_subject, email_body, 'ristonjbergen@gmail.com',
                 [email], fail_silently=False)
@@ -170,18 +176,23 @@ def add_Patient(request):
         if form.is_valid():
             form.save()
             email = form.cleaned_data['email']
+            user_profile = get_object_or_404(Patient, email=email)
+            user = user_profile
             random_string = str(random.random()).encode('utf8')
             salt = hashlib.sha1(random_string).hexdigest()[:5]
             salted = (salt + email).encode('utf8')
             activation_key = hashlib.sha1(salted).hexdigest()
             key_expires = datetime.datetime.today() + datetime.timedelta(2)
+            user.activation_key=activation_key
+            user.key_expires=key_expires
+            user.save()
             
 
             email_subject = 'Account confirmation'
             #email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
             #48hours http://127.0.0.1:8000/accounts/confirm/%s" % (email, activation_key)
             email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
-            48hours http://127.0.0.1:8000/HMS/account/confirm/%s" % (email, activation_key)
+            48hours http://127.0.0.1:8000/HMS/account/confirm/patient/%s" % (email, activation_key)
 
             send_mail(email_subject, email_body, 'ristonjbergen@gmail.com',
                 [email], fail_silently=False)
@@ -199,10 +210,6 @@ def add_Patient(request):
 
 
 def register_confirm(request, activation_key):
-    #check if user is already logged in and if he is redirect him to some other url, e.g. home
-    #if request.Doctor.is_active():
-      #  HttpResponseRedirect('HMS/doctor_homepage')
-
     # check if there is UserProfile which matches the activation key (if not then display 404)
     user_profile = get_object_or_404(Doctor, activation_key=activation_key)
 
@@ -217,51 +224,39 @@ def register_confirm(request, activation_key):
 
 def register_confirm_doctor(request, activation_key):
     #check if user is already logged in and if he is redirect him to some other url, e.g. home
-    if request.Doctor.is_authenticated():
-        HttpResponseRedirect('HMS/doctor_homepage')
-
-    # check if there is UserProfile which matches the activation key (if not then display 404)
     user_profile = get_object_or_404(Doctor, activation_key=activation_key)
 
     #check if the activation key has expired, if it hase then render confirm_expired.html
-#    if user_profile.key_expires < timezone.now():
-     #   return render_to_response('user_profile/confirm_expired.html')
+    if user_profile.key_expires < timezone.now():
+        return render_to_response('account/confirm_expired.html')
     #if the key hasn't expired save user and set him as active and render some template to confirm activation
-    user = user_profile.Doctor
-    Doctor.is_active = True
-    Doctor.save()
-    return render_to_response('user_profile/confirm.html')
+    user = user_profile
+    user.is_active = True
+    user.save()
+    return render(request, 'HMS/account/confirm.html')
 
 def register_confirm_nurse(request, activation_key):
     #check if user is already logged in and if he is redirect him to some other url, e.g. home
-    if request.Nurse.is_authenticated():
-        HttpResponseRedirect('HMS/nurse_homepage')
-
-    # check if there is UserProfile which matches the activation key (if not then display 404)
     user_profile = get_object_or_404(Nurse, activation_key=activation_key)
 
     #check if the activation key has expired, if it hase then render confirm_expired.html
-#    if user_profile.key_expires < timezone.now():
-     #   return render_to_response('user_profile/confirm_expired.html')
+    if user_profile.key_expires < timezone.now():
+        return render_to_response('account/confirm_expired.html')
     #if the key hasn't expired save user and set him as active and render some template to confirm activation
-    user = user_profile.Nurse
-    Nurse.is_active = True
-    Nurse.save()
-    return render_to_response('user_profile/confirm.html')
+    user = user_profile
+    user.is_active = True
+    user.save()
+    return render(request, 'HMS/account/confirm.html')
 
 def register_confirm_patient(request, activation_key):
     #check if user is already logged in and if he is redirect him to some other url, e.g. home
-    if request.Patient.is_authenticated():
-        HttpResponseRedirect('HMS/doctor_homepage')
-
-    # check if there is UserProfile which matches the activation key (if not then display 404)
     user_profile = get_object_or_404(Patient, activation_key=activation_key)
 
     #check if the activation key has expired, if it hase then render confirm_expired.html
-#    if user_profile.key_expires < timezone.now():
-     #   return render_to_response('user_profile/confirm_expired.html')
+    if user_profile.key_expires < timezone.now():
+        return render_to_response('account/confirm_expired.html')
     #if the key hasn't expired save user and set him as active and render some template to confirm activation
-    user = user_profile.Patient
-    Patient.is_active = True
-    Patient.save()
-    return render_to_response('user_profile/confirm.html')
+    user = user_profile
+    user.is_active = True
+    user.save()
+    return render(request, 'HMS/account/confirm.html')

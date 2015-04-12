@@ -19,8 +19,10 @@ urlpatterns = patterns('',
     url(r'calendarHome', views.cal_home, name='cal_home'),
     url(r'^swingtime/events/type/([^/]+)/$', views.event_type, name='Hospital-event'),
     (r'^swingtime/', include('swingtime.urls')),
-    url(r'^account/confirm/(?P<activation_key>\w+)/', ('HMS.views.register_confirm')),
-    (r'^accounts/', include('allauth.urls')),
+    url(r'^account/confirm/doctor/(?P<activation_key>\w+)/', ('HMS.views.register_confirm_doctor')),
+    url(r'^account/confirm/nurse/(?P<activation_key>\w+)/', ('HMS.views.register_confirm_nurse')),
+    url(r'^account/confirm/patient/(?P<activation_key>\w+)/', ('HMS.views.register_confirm_patient')),
+    #(r'^accounts/', include('allauth.urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()
