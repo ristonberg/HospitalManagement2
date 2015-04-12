@@ -1,19 +1,15 @@
 from django import forms
+from django.db import models
+from django.contrib.auth.models import User
 from django.forms import ModelForm
 from HMS.models import MyUser, Nurse, Doctor, Patient
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.contrib import auth
-from django.core.context_processors import csrf
-from django.core.mail import send_mail
-import hashlib, datetime, random
-from django.utils import timezone
 
 class PatientCreationForm(ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
-    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'E-mail address'}))
 
     class Meta:
         model = Patient
@@ -27,7 +23,7 @@ class PatientCreationForm(ModelForm):
         except MyUser.DoesNotExist:
             return email
         raise forms.ValidationError('duplicate email')
-
+    
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
@@ -38,15 +34,11 @@ class PatientCreationForm(ModelForm):
 
     def save(self, commit=True):
         # Save the provided password in hashed format
-        Patient = super(PatientCreationForm, self).save(commit=False)
-        Patient.email = self.cleaned_data['email']
-        Patient.set_password(self.cleaned_data["password1"])
+        user = super(PatientCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
         if commit:
-            Patient.save()
-               # Send email with activation key
-        
-        return Patient
-
+            user.save()
+        return user
 
 
 class PatientChangeForm(ModelForm):
@@ -84,7 +76,7 @@ class DoctorCreationForm(ModelForm):
         except MyUser.DoesNotExist:
             return email
         raise forms.ValidationError('duplicate email')
-
+    
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
@@ -95,13 +87,11 @@ class DoctorCreationForm(ModelForm):
 
     def save(self, commit=True):
         # Save the provided password in hashed format
-        Doctor = super(DoctorCreationForm, self).save(commit=False)
-        Doctor.email = self.cleaned_data['email']
-        Doctor.set_password(self.cleaned_data["password1"])
+        user = super(DoctorCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
         if commit:
-            Doctor.save()
-        return Doctor
-
+            user.save()
+        return user
 
 
 class DoctorChangeForm(ModelForm):
@@ -130,7 +120,7 @@ class NurseCreationForm(ModelForm):
 
     class Meta:
         model = Nurse
-        fields = ('email', 'first_name', 'last_name', 'department')
+        fields = ('email', 'first_name', 'last_name', 'department','house_number','street','city','state','zip_code')
 
     def clean_email(self):
         email = self.cleaned_data["email"]
@@ -140,7 +130,7 @@ class NurseCreationForm(ModelForm):
         except MyUser.DoesNotExist:
             return email
         raise forms.ValidationError('duplicate email')
-
+    
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
@@ -151,13 +141,11 @@ class NurseCreationForm(ModelForm):
 
     def save(self, commit=True):
         # Save the provided password in hashed format
-        Nurse = super(NurseCreationForm, self).save(commit=False)
-        Nurse.email = self.cleaned_data['email']
-        Nurse.set_password(self.cleaned_data["password1"])
+        user = super(NurseCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
         if commit:
-            Nurse.save()
-        return Nurse
-
+            user.save()
+        return user
 
 class NurseChangeForm(ModelForm):
     """A form for updating users. Includes all the fields on
@@ -194,7 +182,7 @@ class UserCreationForm(ModelForm):
         except MyUser.DoesNotExist:
             return email
         raise forms.ValidationError('duplicate email')
-
+    
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
@@ -205,13 +193,11 @@ class UserCreationForm(ModelForm):
 
     def save(self, commit=True):
         # Save the provided password in hashed format
-        MyUser = super(UserCreationForm, self).save(commit=False)
-        MyUser.set_password(self.cleaned_data["password1"])
+        user = super(UserCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
         if commit:
-            MyUser.save()
-               # Send email with activation key
-        return MyUser
-
+            user.save()
+        return user
 
 
 class UserChangeForm(ModelForm):
