@@ -16,6 +16,7 @@
 			<p>No assigned patients.</p>
 		{% endif %}
 		<a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
+		<p> Click to view your <a href="{% url 'cal_home' %}">calendar</a></p>
     {% endif %}
  </div>
 </body>

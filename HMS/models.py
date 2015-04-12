@@ -56,8 +56,7 @@ class MyUser(AbstractBaseUser):
         unique=True,
         )
 
-    activation_key = models.CharField(max_length=40, blank=True)
-    key_expires = models.DateTimeField(default=datetime.date.today())
+
     first_name = models.CharField(max_length = 20, default = "")
     last_name = models.CharField(max_length = 20, default = "")
     birth_date = models.DateField(default=date.today()) 
@@ -77,13 +76,16 @@ class MyUser(AbstractBaseUser):
     relation = models.CharField(max_length = 20, default = "")
     primary_Phone = models.IntegerField(default = 0)
     secondary_Phone = models.IntegerField(default = 0)
-    is_active = models.BooleanField(default=True)
     is_content_manager = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
-
+    is_active = models.BooleanField(default=False)
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
+
+    class Meta:
+        verbose_name = ('MyUser')
+        verbose_name_plural = ('MyUsers')
 
     def get_full_name(self):
         # The user is identified by their email address
@@ -131,6 +133,18 @@ class Nurse(MyUser):
                     (ORTHOPEDICS, 'Orthopedics'))
     department = models.CharField(max_length = 30, default = "", choices=DEPT_CHOICES)
     is_nurse = models.BooleanField(default=True)
+    is_authenticated = models.BooleanField(default=True)
+    activation_key = models.CharField(max_length=40, blank=True)
+    key_expires = models.DateTimeField(default=datetime.date.today())
+
+        
+    class Meta:
+        verbose_name = ('Nurse')
+        
+    def __str__(self):              # __unicode__ on Python 2
+        return self.email
+
+
 
 class Doctor(MyUser):
     PEDIATRICS = 'PED'
@@ -147,11 +161,32 @@ class Doctor(MyUser):
     specialty = models.CharField(max_length = 30, default = "", choices=SPEC_CHOICES) #Try to turn into checkbox
     experience = models.CharField(max_length = 60, default = "")
     is_doctor = models.BooleanField(default=True)
+    is_authenticated = models.BooleanField(default=True)
+    activation_key = models.CharField(max_length=40, blank=True)
+    key_expires = models.DateTimeField(default=datetime.date.today())
+    
+    class Meta:
+        verbose_name = ('Doctor')
+        
+    def __str__(self):              # __unicode__ on Python 2
+        return self.email
+
+
     
 class Patient(MyUser):
     medical_History = models.CharField(max_length = 40, default = "")
     insurance_Provider = models.CharField(max_length = 40, default = "")
     insurance_Policy_Number = models.IntegerField(default = 0)
     is_patient = models.BooleanField(default=True)
+    is_authenticated = models.BooleanField(default=True)
+    activation_key = models.CharField(max_length=40, blank=True)
+    key_expires = models.DateTimeField(default=datetime.date.today())
+
+    class Meta:
+        verbose_name = ('Patient')
+        
+    def __str__(self):              # __unicode__ on Python 2
+        return self.email
+
 
     

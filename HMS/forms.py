@@ -1,4 +1,6 @@
 from django import forms
+from django.db import models
+from django.contrib.auth.models import User
 from django.forms import ModelForm
 from HMS.models import MyUser, Nurse, Doctor, Patient
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
@@ -14,6 +16,14 @@ class PatientCreationForm(ModelForm):
         fields = ('email', 'first_name', 'last_name', 'birth_date', 'gender',
                   'marital_Status', 'phone_number')
 
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        try:
+            Patient._default_manager.get(email=email)
+        except MyUser.DoesNotExist:
+            return email
+        raise forms.ValidationError('duplicate email')
+    
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
@@ -59,6 +69,14 @@ class DoctorCreationForm(ModelForm):
         model = Doctor
         fields = ('email', 'first_name', 'last_name', 'specialty')
 
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        try:
+            Doctor._default_manager.get(email=email)
+        except MyUser.DoesNotExist:
+            return email
+        raise forms.ValidationError('duplicate email')
+    
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
@@ -104,6 +122,15 @@ class NurseCreationForm(ModelForm):
         model = Nurse
         fields = ('email', 'first_name', 'last_name', 'department','house_number','street','city','state','zip_code')
 
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+
+        try:
+            Nurse._default_manager.get(email=email)
+        except MyUser.DoesNotExist:
+            return email
+        raise forms.ValidationError('duplicate email')
+    
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
@@ -148,6 +175,14 @@ class UserCreationForm(ModelForm):
         model = MyUser
         fields = ('email', 'first_name', 'last_name', 'birth_date')
 
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        try:
+            MyUser._default_manager.get(email=email)
+        except MyUser.DoesNotExist:
+            return email
+        raise forms.ValidationError('duplicate email')
+    
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
