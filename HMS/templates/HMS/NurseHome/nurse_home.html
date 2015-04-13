@@ -1,0 +1,25 @@
+<html>
+<body>
+<div>  
+    {% if user.is_anonymous %}
+		<a href="{% url 'django.contrib.auth.views.login' %}">login</a>
+    {% else %}   
+		<h1> Welcome, Nurse {{user.first_name}} {{user.last_name}} </h1> 
+		<h2>Patients in your department ({{user.nurse.department}}): </h2>  
+		{% if patient_list %}
+			<ul>
+			{% for patient in patient_list %}  
+			{% if patient.department == user.nurse.department %} 
+				<li><a href="{% url 'patdetail' patient.id %}">{{patient.last_name}},{{ patient.first_name }}</a></li> 
+			{% endif %}
+			{% endfor %}
+			</ul>
+		{% else %}
+			<p>No assigned patients.</p>
+		{% endif %}
+		<a href= "{% url 'password_change' %}">Change Password</a></br>
+		<a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a>
+    {% endif %}
+ </div>
+</body>
+</html>

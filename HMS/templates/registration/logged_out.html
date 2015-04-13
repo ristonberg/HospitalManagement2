@@ -1,0 +1,15 @@
+<div>
+    {% if user.is_anonymous %} 
+		<p> You have been logged out. </p>
+		<a href="{% url 'django.contrib.auth.views.login' %}">login</a>
+    {% else %}  
+		<p> You have already logged in. </br> 
+		 Click 
+		 <a href="../HMS/home">here</a> 
+		 to go to your homepage. </br> 
+		 Or
+		 <a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a> 
+		 </p>
+    {% endif %}
+ </div>
+

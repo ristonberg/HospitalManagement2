@@ -1,0 +1,37 @@
+{% block content %}
+
+	<div>
+      {% if user.is_anonymous %} 
+		<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+		{% csrf_token %}
+		<table>
+		<tr>
+			<td>{{ form.username.label_tag }}</td>
+			<td>{{ form.username }}</td>
+		</tr>
+		<tr>
+			<td>{{ form.password.label_tag }}</td>
+			<td>{{ form.password }}</td>
+		</tr>
+		</table>
+		<input type="submit" value="login" />
+		<input type="hidden" name="next" value="{{ next }}" />
+		</form>
+
+		<a href= "{% url 'registration' %}">Need An Account? Register Here.</a></br>
+      {% else %} 
+		 <p> You have already logged in. </br> 
+		 Click 
+		 <a href="../HMS/home">here</a> 
+		 to go to your homepage. </br> 
+		 Or
+		 <a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a> 
+		 </p>
+      {% endif %}
+    </div>
+
+	{% if form.errors %}
+	<p>Your username and password didn't match. Please try again.</p>
+	{% endif %}
+
+{% endblock %}
