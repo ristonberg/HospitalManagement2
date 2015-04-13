@@ -1,7 +1,9 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from HMS import views
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'login', views.login, name='login'),
@@ -13,6 +15,14 @@ urlpatterns = patterns('',
     url(r'addNurse', views.add_Nurse, name='add_Nurse'),
     url(r'addDoctor', views.add_Doctor, name='add_Doctor'),
     url(r'addPatient', views.add_Patient, name='add_Patient'),
+    url(r'home', views.home, name = 'home'),
+    url(r'calendarHome', views.cal_home, name='cal_home'),
+    url(r'^swingtime/events/type/([^/]+)/$', views.event_type, name='Hospital-event'),
+    (r'^swingtime/', include('swingtime.urls')),
+    url(r'^account/confirm/doctor/(?P<activation_key>\w+)/', ('HMS.views.register_confirm_doctor')),
+    url(r'^account/confirm/nurse/(?P<activation_key>\w+)/', ('HMS.views.register_confirm_nurse')),
+    url(r'^account/confirm/patient/(?P<activation_key>\w+)/', ('HMS.views.register_confirm_patient')),
+    #(r'^accounts/', include('allauth.urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()
