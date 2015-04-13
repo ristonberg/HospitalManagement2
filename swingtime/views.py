@@ -21,7 +21,7 @@ if swingtime_settings.CALENDAR_FIRST_WEEKDAY is not None:
 #-------------------------------------------------------------------------------
 def event_listing(
     request,
-    template='swingtime/event_list.html',
+    template='HMS/swingtime/event_list.html',
     events=None,
     **extra_context
 ):
@@ -48,7 +48,7 @@ def event_listing(
 def event_view(
     request,
     pk,
-    template='swingtime/event_detail.html',
+    template='HMS/swingtime/event_detail.html',
     event_form_class=forms.EventForm,
     recurrence_form_class=forms.MultipleOccurrenceForm
 ):
@@ -96,7 +96,7 @@ def occurrence_view(
     request,
     event_pk,
     pk,
-    template='swingtime/occurrence_detail.html',
+    template='HMS/swingtime/occurrence_detail.html',
     form_class=forms.SingleOccurrenceForm
 ):
     '''
@@ -125,7 +125,7 @@ def occurrence_view(
 #-------------------------------------------------------------------------------
 def add_event(
     request,
-    template='swingtime/add_event.html',
+    template='HMS/swingtime/add_event.html',
     event_form_class=forms.EventForm,
     recurrence_form_class=forms.MultipleOccurrenceForm
 ):
@@ -213,7 +213,7 @@ def _datetime_view(
 
 
 #-------------------------------------------------------------------------------
-def day_view(request, year, month, day, template='swingtime/daily_view.html', **params):
+def day_view(request, year, month, day, template='HMS/swingtime/daily_view.html', **params):
     '''
     See documentation for function``_datetime_view``.
     
@@ -223,7 +223,7 @@ def day_view(request, year, month, day, template='swingtime/daily_view.html', **
 
 
 #-------------------------------------------------------------------------------
-def today_view(request, template='swingtime/daily_view.html', **params):
+def today_view(request, template='HMS/swingtime/daily_view.html', **params):
     '''
     See documentation for function``_datetime_view``.
     
@@ -232,7 +232,7 @@ def today_view(request, template='swingtime/daily_view.html', **params):
 
 
 #-------------------------------------------------------------------------------
-def year_view(request, year, template='swingtime/yearly_view.html', queryset=None):
+def year_view(request, year, template='HMS/swingtime/yearly_view.html', queryset=None):
     '''
 
     Context parameters:
@@ -281,7 +281,7 @@ def month_view(
     request,
     year,
     month,
-    template='swingtime/monthly_view.html',
+    template='HMS/swingtime/monthly_view.html',
     queryset=None
 ):
     '''
